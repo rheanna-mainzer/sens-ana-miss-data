@@ -10,6 +10,7 @@
 library(boot)
 library(dplyr)
 library(flextable)
+library(forcats)
 library(gridExtra)
 library(ggdist)
 library(ggplot2)
@@ -40,13 +41,13 @@ source("descr_LSAC.R", echo = TRUE)
 # Create Figure 2 for paper
 source("cr_figure2_v2.R", echo = TRUE)
 
-# Run analysis of continuous outcome reported in main text
+# Run analysis of continuous outcome
 source("sens_params_cont.R", echo = TRUE)
 source("an_LSAC_cont.R")
 
-# Run analysis of binary outcome reported in Supplementary Material
+# Run analysis of binary outcome
 source("sens_params_bin.R", echo = TRUE)
 source("an_LSAC_bin.R")                        
 
-# Run analysis of continuous outcome with interaction reported in Supplementary Material
+# Run analysis of continuous outcome with interaction
 source("an_LSAC_cont_int.R", echo = TRUE)

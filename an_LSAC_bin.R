@@ -256,6 +256,9 @@ res_prop$meth <- factor(res_prop$meth,
                                    "Weighting",
                                    "Extreme case"),
                         ordered = TRUE)
+res_prop$meth <- fct_recode(res_prop$meth,
+                            "Delta-adjusted MI" = "Shifting",
+                            "Stacked MI" = "Weighting")
 res_prop <- rbind(res_prop,
                   data.frame(estimand = rep(c("prop"), 2),
                              meth = c("**Primary analysis**",
@@ -271,6 +274,9 @@ res_prop_diff$meth <- factor(res_prop_diff$meth,
                                         "Weighting",
                                         "Extreme case"),
                              ordered = TRUE)
+res_prop_diff$meth <- fct_recode(res_prop_diff$meth,
+                                 "Delta-adjusted MI" = "Shifting",
+                                 "Stacked MI" = "Weighting")
 
 res_prop_diff <- rbind(res_prop_diff, 
                        data.frame(estimand = rep("prop_diff", 2),
@@ -303,23 +309,24 @@ p1 <- ggplot(res_prop) +
                               "Standard MI",
                               "**Primary analysis**")) +
   scale_shape_manual(values = c("Standard MI" = 1,
-                                "Shifting" = 17, 
-                                "Weighting" = 15,
+                                "Delta-adjusted MI" = 17, 
+                                "Stacked MI" = 15,
                                 "Extreme case" = 16),
                      breaks = c("Standard MI",
-                                "Shifting",
-                                "Weighting",
+                                "Delta-adjusted MI",
+                                "Stacked MI",
                                 "Extreme case")) +
   scale_colour_manual(values = c("Standard MI" = my_cols[1],
-                                 "Shifting" = my_cols[2],
-                                 "Weighting" = my_cols[3],
+                                 "Delta-adjusted MI" = my_cols[2],
+                                 "Stacked MI" = my_cols[3],
                                  "Extreme case" = my_cols[4]),
                       na.translate = FALSE) +
   labs(colour = "Approach", shape = "Approach") + 
   coord_flip() +
   theme_bw() +
   theme(plot.margin = unit(c(1, 1, 3, 1), "lines"),
-        axis.text.y = element_markdown()) +
+        axis.text.y = element_markdown(),
+        text = element_text(family = "serif")) +
   xlab("") + ylab("Proportion with poor HRQoL") +
   guides(shape = guide_legend(title = "Approach", 
                               override.aes = list(shape = c(1, 17, 15, 16))))
@@ -345,16 +352,16 @@ p2 <- ggplot(res_prop_diff) +
                               "Complete cases",
                               "**Primary analysis**")) +
   scale_shape_manual(values = c("Complete cases" = 1,
-                                "Shifting" = 17, 
-                                "Weighting" = 15,
+                                "Delta-adjusted MI" = 17, 
+                                "Stacked MI" = 15,
                                 "Extreme case" = 16),
                      breaks = c("Complete cases",
-                                "Shifting",
-                                "Weighting",
+                                "Delta-adjusted MI",
+                                "Stacked MI",
                                 "Extreme case")) +
   scale_colour_manual(values = c("Complete cases" = my_cols[1],
-                                 "Shifting" = my_cols[2],
-                                 "Weighting" = my_cols[3],
+                                 "Delta-adjusted MI" = my_cols[2],
+                                 "Stacked MI" = my_cols[3],
                                  "Extreme case" = my_cols[4]),
                       na.translate = FALSE) +
   labs(colour = "Approach", shape = "Approach") + 
@@ -365,7 +372,8 @@ p2 <- ggplot(res_prop_diff) +
                               override.aes = list(shape = c(1, 17, 15, 16),
                                                   linetype = 1))) + 
   theme(axis.text.y = element_markdown(),
-        plot.margin = unit(c(1, 1, 3, 1), "lines"))
+        plot.margin = unit(c(1, 1, 3, 1), "lines"),
+        text = element_text(family = "serif"))
 suppressWarnings(print(p2))
 suppressWarnings(ggsave("results/prop_diff.jpg", plot = p2, width = 6.5, height = 4.7, unit = "in"))
 
